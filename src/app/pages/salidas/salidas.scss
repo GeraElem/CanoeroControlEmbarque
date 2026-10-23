@@ -1,0 +1,117 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #eef2f6;
+}
+
+.salidas {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 16px 16px 40px;
+  box-sizing: border-box;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+
+  .titulo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo { height: 48px; }
+  h1 { font-size: 22px; color: #0d3b66; margin: 0; }
+  .op { font-size: 13px; color: #678; }
+
+  .filtro {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  input[type='date'] {
+    font-size: 16px;
+    padding: 8px 10px;
+    border: 1px solid #cdd6e0;
+    border-radius: 8px;
+  }
+  .refrescar {
+    font-size: 20px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid #cdd6e0;
+    background: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+}
+
+.aviso {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 12px;
+
+  &.offline { background: #fff3cd; color: #856404; border: 1px solid #ffe69c; }
+  &.error { background: #fdecea; color: #b71c1c; border: 1px solid #f5c6cb; }
+}
+
+.grupo {
+  font-size: 15px;
+  color: #556;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 18px 4px 10px;
+}
+
+.vacio {
+  text-align: center;
+  color: #789;
+  padding: 48px 0;
+  font-size: 16px;
+}
+
+.card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: box-shadow 0.15s, transform 0.05s;
+
+  &:active { transform: scale(0.99); }
+  &:hover { box-shadow: 0 4px 16px rgba(13, 59, 102, 0.12); }
+  &:disabled { opacity: 0.7; cursor: default; }
+
+  .hora {
+    font-size: 30px;
+    font-weight: 700;
+    color: #1b6ca8;
+    min-width: 90px;
+  }
+  .info { flex: 1; }
+  .desc { font-size: 18px; font-weight: 600; color: #1a2a3a; }
+  .boletos { font-size: 14px; color: #678; margin-top: 2px; }
+  .flecha { font-size: 28px; color: #9fb3c8; }
+  .spin { font-size: 22px; }
+}
+
+.volver {
+  display: block;
+  margin: 24px auto 0;
+  background: transparent;
+  border: none;
+  color: #1b6ca8;
+  font-size: 15px;
+  cursor: pointer;
+}

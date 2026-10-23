@@ -1,0 +1,39 @@
+<div class="pareo">
+  <div class="card">
+    <img class="logo" src="logo.png" alt="Canoero Catamaranes Ushuaia" />
+    <h1>Control de Embarque</h1>
+
+    @if (pareado()) {
+      <!-- Ya vinculada -->
+      <div class="estado-ok">
+        <span class="check">✓</span> Tablet vinculada
+        <div class="sub">Dispositivo #{{ config.dispositivoId() }}</div>
+      </div>
+
+      <label>Operador</label>
+      <input type="text" [(ngModel)]="operador" placeholder="Tu nombre (opcional)" />
+
+      <button class="primario" (click)="continuar()">Continuar</button>
+      <button class="link" (click)="despairear()">Desvincular esta tablet</button>
+    } @else {
+      <!-- Pareo inicial -->
+      <p class="ayuda">Ingresá la URL del servidor y el código de pareo generado desde el sistema.</p>
+
+      <label>URL del servidor</label>
+      <input type="url" [(ngModel)]="url" placeholder="https://servidor/webapi" autocomplete="off" />
+
+      <label>Código de pareo</label>
+      <input type="text" class="codigo" [(ngModel)]="codigo" placeholder="XXXX-XXXX"
+             autocapitalize="characters" autocomplete="off" />
+
+      <label>Operador</label>
+      <input type="text" [(ngModel)]="operador" placeholder="Tu nombre (opcional)" />
+
+      @if (error()) { <div class="error">{{ error() }}</div> }
+
+      <button class="primario" (click)="parear()" [disabled]="procesando()">
+        {{ procesando() ? 'Vinculando…' : 'Parear tablet' }}
+      </button>
+    }
+  </div>
+</div>

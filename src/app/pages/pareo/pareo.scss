@@ -1,0 +1,122 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #0d3b66 0%, #1b6ca8 100%);
+}
+
+.pareo {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.card {
+  width: 100%;
+  max-width: 460px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px 28px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  width: 160px;
+  align-self: center;
+  margin-bottom: 8px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 22px;
+  color: #0d3b66;
+  margin: 0 0 20px;
+}
+
+.ayuda {
+  color: #555;
+  font-size: 14px;
+  text-align: center;
+  margin: 0 0 16px;
+}
+
+label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin: 12px 0 4px;
+}
+
+input {
+  font-size: 18px;
+  padding: 12px 14px;
+  border: 1px solid #cdd6e0;
+  border-radius: 10px;
+  outline: none;
+
+  &:focus { border-color: #1b6ca8; }
+
+  &.codigo {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-family: monospace;
+    font-size: 22px;
+    text-align: center;
+  }
+}
+
+.estado-ok {
+  text-align: center;
+  color: #1e7e34;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+
+  .check {
+    display: inline-block;
+    background: #1e7e34;
+    color: #fff;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    margin-right: 6px;
+  }
+  .sub { color: #777; font-weight: 400; font-size: 14px; margin-top: 4px; }
+}
+
+.error {
+  background: #fdecea;
+  color: #b71c1c;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  margin-top: 14px;
+}
+
+button {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  cursor: pointer;
+
+  &.primario {
+    background: #1b6ca8;
+    color: #fff;
+    &:disabled { opacity: 0.6; }
+  }
+  &.link {
+    background: transparent;
+    color: #b71c1c;
+    margin-top: 10px;
+    font-size: 15px;
+  }
+}

@@ -1,0 +1,101 @@
+<div class="escaneo">
+  <!-- Encabezado: salida + contador -->
+  <header>
+    <button class="volver" (click)="cambiarSalida()" title="Cambiar salida">‹</button>
+    <div class="salida-info">
+      <div class="desc">{{ salida()?.descripcion || 'Salida' }}</div>
+      <div class="hora">{{ salida()?.fechaHora ? (salida()!.fechaHora | date: 'dd/MM HH:mm') : '' }}</div>
+    </div>
+    <div class="contador">
+      <span class="emb">{{ embarcados() }}</span><span class="tot">/{{ total() }}</span>
+      <div class="lbl">embarcados</div>
+    </div>
+  </header>
+
+  <!-- Barra de avance -->
+  <div class="avance">
+    <div class="barra" [style.width.%]="total() ? (embarcados() * 100 / total()) : 0"></div>
+  </div>
+
+  <!-- Zona central -->
+  <div class="centro">
+    @if (scannerDisponible()) {
+      <button class="escanear" (click)="escanear()" [disabled]="escaneando()">
+        <span class="cam">📷</span>
+        {{ escaneando() ? 'Escaneando…' : 'Escanear QR' }}
+      </button>
+    } @else {
+      <!-- Modo navegador: simular lecturas + pegar QR -->
+      <div class="simular">
+        <p class="nota">Modo navegador (sin cámara). Simulá lecturas para probar la lógica:</p>
+        <div class="botones">
+          <button class="b ok" (click)="simular('ok')">QR válido</button>
+          <button class="b dup" (click)="simular('duplicado')">Duplicado</button>
+          <button class="b fuera" (click)="simular('fuera')">Fuera de manifiesto</button>
+          <button class="b otra" (click)="simular('otra')">Otra salida</button>
+          <button class="b inv" (click)="simular('invalido')">QR inválido</button>
+        </div>
+        <div class="pegar">
+          <input type="text" [(ngModel)]="qrManual" placeholder="Pegar contenido de un QR…" />
+          <button (click)="procesarQrManual()">Procesar</button>
+        </div>
+      </div>
+    }
+
+    <div class="acciones-sec">
+      <button class="manual" (click)="panelManual.set(true)">🔍 Búsqueda manual</button>
+      <button class="manual" (click)="verResumen()">📊 Resumen</button>
+    </div>
+    @if (mensajeSync()) { <div class="msg">{{ mensajeSync() }}</div> }
+  </div>
+
+  <!-- Pie: sincronización -->
+  <footer>
+    <div class="pend">
+      @if (pendientes() > 0) {
+        <span class="badge">{{ pendientes() }}</span> pendientes de enviar
+      } @else {
+        <span class="ok-dot">●</span> Todo sincronizado
+      }
+    </div>
+    <button class="sync" (click)="sincronizar()" [disabled]="sincronizando()">
+      {{ sincronizando() ? 'Sincronizando…' : 'Sincronizar' }}
+    </button>
+  </footer>
+
+  <!-- Cartel grande de resultado -->
+  @if (resultado(); as r) {
+    <div class="overlay" [style.background]="r.color" (click)="cerrarResultado()">
+      <div class="titulo">{{ r.titulo }}</div>
+      @if (r.pasajero) { <div class="pasajero">{{ r.pasajero }}</div> }
+      @if (r.detalle) { <div class="detalle">{{ r.detalle }}</div> }
+      <div class="tap">tocá para continuar</div>
+    </div>
+  }
+
+  <!-- Panel de búsqueda manual -->
+  @if (panelManual()) {
+    <div class="modal-fondo" (click)="panelManual.set(false)">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <div class="modal-head">
+          <h3>Búsqueda manual</h3>
+          <button class="x" (click)="panelManual.set(false)">×</button>
+        </div>
+        <input type="text" class="buscar" [(ngModel)]="filtroManual" placeholder="Nombre o N° de boleto…" autofocus />
+        <div class="lista">
+          @for (b of resultadosManual(); track b.bolId) {
+            <button class="fila" [class.ya]="b.embarcado" (click)="embarcarManual(b)">
+              <div class="nom">{{ b.pasajero }}</div>
+              <div class="meta">
+                <span class="tipo">{{ b.tipo }}</span>
+                @if (b.embarcado) { <span class="estado">✓ embarcado</span> }
+              </div>
+            </button>
+          } @empty {
+            <div class="sin">Sin resultados.</div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

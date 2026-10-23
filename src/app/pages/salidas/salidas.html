@@ -1,0 +1,57 @@
+<div class="salidas">
+  <header>
+    <div class="titulo">
+      <img class="logo" src="logo.png" alt="Canoero" />
+      <div>
+        <h1>Elegí la salida</h1>
+        @if (config.operador()) { <span class="op">Operador: {{ config.operador() }}</span> }
+      </div>
+    </div>
+    <div class="filtro">
+      <input type="date" [(ngModel)]="fecha" (change)="cargar()" />
+      <button class="refrescar" (click)="cargar()" [disabled]="cargando()" title="Actualizar">↻</button>
+    </div>
+  </header>
+
+  @if (offline()) {
+    <div class="aviso offline">Sin conexión — mostrando datos guardados en la tablet.</div>
+  }
+  @if (error()) {
+    <div class="aviso error">{{ error() }}</div>
+  }
+
+  @if (cargando()) {
+    <div class="vacio">Cargando salidas…</div>
+  } @else if (salidas().length === 0) {
+    <div class="vacio">No hay salidas para esta fecha.</div>
+  } @else {
+    @if (manana().length) {
+      <h2 class="grupo">☀️ Mañana</h2>
+      @for (s of manana(); track s.salidaId) {
+        <ng-container [ngTemplateOutlet]="tarjeta" [ngTemplateOutletContext]="{ s: s }" />
+      }
+    }
+    @if (tarde().length) {
+      <h2 class="grupo">🌅 Tarde</h2>
+      @for (s of tarde(); track s.salidaId) {
+        <ng-container [ngTemplateOutlet]="tarjeta" [ngTemplateOutletContext]="{ s: s }" />
+      }
+    }
+  }
+
+  <button class="volver" (click)="volverAlPareo()">← Configuración</button>
+</div>
+
+<!-- Tarjeta de salida -->
+<ng-template #tarjeta let-s="s">
+  <button class="card" (click)="abrir(s)" [disabled]="abriendo() !== null">
+    <div class="hora">{{ horaTexto(s) }}</div>
+    <div class="info">
+      <div class="desc">{{ s.descripcion }}</div>
+      <div class="boletos">{{ s.cantidadBoletos }} boletos</div>
+    </div>
+    <div class="flecha">
+      @if (abriendo() === s.salidaId) { <span class="spin">⏳</span> } @else { › }
+    </div>
+  </button>
+</ng-template>

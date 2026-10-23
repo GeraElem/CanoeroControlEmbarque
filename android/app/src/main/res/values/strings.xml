@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Embarque Canoero</string>
+    <string name="title_activity_main">Embarque Canoero</string>
+    <string name="package_name">ar.tur.canoeros.embarque</string>
+    <string name="custom_url_scheme">ar.tur.canoeros.embarque</string>
+</resources>

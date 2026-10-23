@@ -1,0 +1,70 @@
+<div class="resumen">
+  <header>
+    <button class="volver" (click)="seguir()" title="Seguir escaneando">‹</button>
+    <div class="salida-info">
+      <div class="desc">{{ salida()?.descripcion || 'Resumen' }}</div>
+      <div class="hora">{{ salida()?.fechaHora ? (salida()!.fechaHora | date: 'dd/MM/yyyy HH:mm') : '' }}</div>
+    </div>
+  </header>
+
+  <!-- Hero: avance de embarque -->
+  <div class="hero">
+    <div class="ring" [style.--pct]="porcentaje()">
+      <div class="centro">
+        <div class="pct">{{ porcentaje() }}%</div>
+        <div class="frac">{{ embarcados() }} / {{ total() }}</div>
+      </div>
+    </div>
+    <div class="leyenda">
+      <div class="emb"><span class="dot"></span> {{ embarcados() }} embarcados</div>
+      <div class="pend"><span class="dot"></span> {{ faltan() }} pendientes</div>
+    </div>
+  </div>
+
+  <!-- Desglose por resultado -->
+  <h2 class="titulo">Lecturas registradas</h2>
+  <div class="chips">
+    @for (c of conteos(); track c.resultado) {
+      <div class="chip" [style.border-left-color]="c.color">
+        <div class="num" [style.color]="c.color">{{ c.cantidad }}</div>
+        <div class="lbl">{{ c.etiqueta }}</div>
+      </div>
+    }
+  </div>
+
+  <!-- Pasajeros que faltan embarcar -->
+  <h2 class="titulo">
+    Faltan embarcar
+    <span class="cnt">{{ faltan() }}</span>
+  </h2>
+  <div class="faltantes">
+    @for (b of noEmbarcados(); track b.bolId) {
+      <div class="fila">
+        <div class="nom">{{ b.pasajero }}</div>
+        <div class="tipo">{{ b.tipo }}</div>
+      </div>
+    } @empty {
+      <div class="todos">✓ Todos los pasajeros embarcaron.</div>
+    }
+  </div>
+
+  <!-- Sincronización -->
+  <div class="sync-box">
+    <div class="estado">
+      @if (pendientesSync() > 0) {
+        <span class="badge">{{ pendientesSync() }}</span> lecturas pendientes de enviar
+      } @else {
+        <span class="ok">● Todo sincronizado</span>
+      }
+    </div>
+    <button class="sync" (click)="sincronizar()" [disabled]="sincronizando()">
+      {{ sincronizando() ? 'Sincronizando…' : 'Sincronizar' }}
+    </button>
+    @if (mensajeSync()) { <div class="msg">{{ mensajeSync() }}</div> }
+  </div>
+
+  <div class="acciones">
+    <button class="primario" (click)="seguir()">Seguir escaneando</button>
+    <button class="secundario" (click)="cambiarSalida()">Cambiar de salida</button>
+  </div>
+</div>
